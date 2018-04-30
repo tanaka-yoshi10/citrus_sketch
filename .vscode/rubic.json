@@ -3,8 +3,8 @@
     "hardware": {
         "boardClass": "GrCitrusBoard",
         "repositoryUuid": "809d1206-8cd8-46f6-a657-2f60c050d7c9",
-        "releaseTag": "v2.19",
-        "variationPath": "citrus_sketch.bin",
+        "releaseTag": "v2.39",
+        "variationPath": "00/citrus_sketch.bin",
         "boardPath": "/dev/tty.usbmodem1_1"
     },
     "rubicVersion": {
