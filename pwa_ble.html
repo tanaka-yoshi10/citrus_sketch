@@ -1,0 +1,48 @@
+<html>
+<script>
+function onButtonClick(value) {
+  let serviceUuid = '569a1101-b87f-490c-92cb-11ba5ea5167c';
+  if (serviceUuid.startsWith('0x')) {
+    serviceUuid = parseInt(serviceUuid);
+  }
+
+  let characteristicUuid = '569a2001-b87f-490c-92cb-11ba5ea5167c';
+  if (characteristicUuid.startsWith('0x')) {
+    characteristicUuid = parseInt(characteristicUuid);
+  }
+
+  console.log('Requesting Bluetooth Device...');
+  navigator.bluetooth.requestDevice({filters: [{services: [serviceUuid]}]})
+  .then(device => {
+    console.log('Connecting to GATT Server...');
+    return device.gatt.connect();
+  })
+  .then(server => {
+    console.log('Getting Service...');
+    return server.getPrimaryService(serviceUuid);
+  })
+  .then(service => {
+    console.log('Getting Characteristic...');
+    return service.getCharacteristic(characteristicUuid);
+  })
+  .then(characteristic => {
+    var ledon = Uint8Array.of(value);
+    characteristic.writeValue(ledon);
+    console.log('> Characteristic UUID:  ' + characteristic.uuid);
+  })
+  .catch(error => {
+    console.log('Argh! ' + error);
+  });
+}
+</script>
+
+<head>
+</head>
+
+<body>
+  <p>Web Bluetooth Sample</p>
+  <input type="button" value="ON" onclick='onButtonClick(0x31)'>
+  <input type="button" value="OFF" onclick='onButtonClick(0x30)'>
+</body>
+
+</html>
